@@ -1,0 +1,18 @@
+README
+
+Created by Justin Wong
+
+First started ~ Jan 2017
+Last updated - May 3, 2017
+
+Go Huskies!
+
+A programming/simulation project to visualize an origami theorem. It is intended for educational use, not for international warfare.
+
+Known Issues:
+- Saving more than once crashes
+- Clicking "Cancel" in the save dialog crashes
+- Clicking the top-right [X] on the save dialog crashes
+- Clicking help more than once crashes
+- Clicking "Make Foldable" with a blank canvas crashes; need to fix method with array to account for this case
+- Clicking "Fold It!" with a blank canvas crashes; see above
