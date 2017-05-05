@@ -298,8 +298,8 @@ public class MainWindow implements Observer {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				MyMath.solveFoldablePoints(topPaint.getPoints(), topPaint.getAngles());
-				topPaint.redraw();		// arraylist points should be updated to be foldable, so redrawing should show it
+				MyMath.solveFoldablePoints(topPaint.getAngles());
+				topPaint.redraw();		// the official set of arraylist points should be updated to be foldable, so redrawing should show it
 				
 			}
 		});

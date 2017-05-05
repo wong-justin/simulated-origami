@@ -149,6 +149,11 @@ public class MyMath {
 			System.out.println("Won't fold; odd number of creases");
 			return false;
 		}
+		if(a.size() == 0)
+		{
+			System.out.println("No creases to fold");
+			return false;		// or is it true???
+		}
 		
 		double[] arr = anglesBetweenCreases(a);
 		
@@ -169,8 +174,8 @@ public class MyMath {
 		// current problem - angles near bottom are inaccurate
 	}
 	
-	public static void solveFoldablePoints(ArrayList<Point> pts,		// It's void b/c i will be modifying the pts arraylist from paintpanel directly by adding or modifying it (object by reference blah blah)
-			ArrayList<Double> angs)	{									// i could approach this as finding the smallest change possible (ie wouldnt move a line 90 degrees around if 
+	public static void solveFoldablePoints(ArrayList<Double> angs)		// It's void b/c i will be modifying the pts arraylist from paintpanel directly by adding or modifying it (object by reference blah blah))
+	{																	// i could approach this as finding the smallest change possible (ie wouldnt move a line 90 degrees around if 
 																		// i could move a different one only 10); this would involve more computation and work to find best case scenario
 																		// it's already 4-27 and i dont know if i could implement this in time RIP; this would demonstrate the most knowledge tho (ie coolest)
 		if(willFold(angs))
