@@ -1,13 +1,14 @@
 README
 
 Created by Justin Wong
+jkwongfl@yahoo.com
 
 First started ~ Jan 2017
-Last updated - May 3, 2017
+Last updated - May 5, 2017
 
-Go Huskies!
+A programming/simulation project to visualize an origami theorem. Intended for educational use.
 
-A programming/simulation project to visualize an origami theorem. It is intended for educational use, not for international warfare.
+Inspired by Erik Demaine's viedo lectures.
 
 Known Issues:
 - Saving more than once crashes
