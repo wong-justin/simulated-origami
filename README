@@ -17,3 +17,4 @@ Known Issues:
 - Clicking help more than once crashes
 - Clicking "Make Foldable" with a blank canvas crashes; need to fix method with array to account for this case
 - Clicking "Fold It!" with a blank canvas crashes; see above
+- Angles are not correct, especially around 180 degrees; need to fix math

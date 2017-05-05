@@ -15,10 +15,14 @@ public class MyMath {
 	
 	public static double angleOnCircle(Point pFromCircle) //given point on circle
 	{
-		Point base = new Point(0, -radius);
+		Point baseP = new Point(0, -radius);
 		Point newP = new Point(pFromCircle.x - center.x, pFromCircle.y - center.y);
+		// normalizing new imaginary circle centered at 0,0 
+		// and baseP at the top, treating like regular coordinate plane WLOG
 		
-		double dist = distance(newP, base);
+		// maybe i should normalize to the precalc circle with 0 degrees on pos x-axis?
+		
+		double dist = distance(newP, baseP);
 
 		double angle = 2 * Math.asin(0.5 * dist / radius); //returns radians -pi/2 to pi/2
 		
@@ -34,7 +38,7 @@ public class MyMath {
 		}
 		return angle;
 		
-		// going to fix this now
+		// need to fix this now
 		
 		// angles near bottom of circle (180 degrees) are slightly inaccurate; goes 169, 174, 173, 171.9, 180.0, 188, 171.9
 	}
