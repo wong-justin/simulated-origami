@@ -41,8 +41,7 @@ public class MainWindow implements Observer {
 	private PaintPanel paintPanel1, paintPanel2, paintPanel3;
 	 StackLayout stackLayout;
 	private Display display;
-	private Composite topleft, topright, botleft, botright;
-	private Label foldResponseLbl;
+	private Composite topleft, topright, botright, botleft;
 	private Button foldBtn;
 	private Color white;
 	private Label typeLbl;
@@ -93,7 +92,7 @@ public class MainWindow implements Observer {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(763, 625);
+		shell.setSize(763, 632);
 		shell.setMinimumSize(438,480);
 		shell.setText("Origami Folding Simulations");
 		GridLayout gl_shell = new GridLayout(2, false);
@@ -233,9 +232,10 @@ public class MainWindow implements Observer {
 		topright = new Composite(shell, SWT.NONE);
 		
 		GridLayout gl_topright = new GridLayout(2, false);
+		gl_topright.horizontalSpacing = 10;
 		gl_topright.marginHeight = 20;
 		gl_topright.marginWidth = 20;
-		gl_topright.verticalSpacing = 35;
+		gl_topright.verticalSpacing = 30;
 		
 		topright.setLayout(gl_topright);
 		GridData gd_topright = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -306,27 +306,33 @@ public class MainWindow implements Observer {
 		solveBtn.setText("Make Foldable");
 		solveBtn.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		
-		botright = new Composite(shell, SWT.NONE);
-		GridData gd_botright = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_botright.heightHint = 120;
-		gd_botright.widthHint = 573;
-		botright.setLayoutData(gd_botright);
-		
-		foldBtn = new Button(botright, SWT.NONE);
-		foldBtn.setSize(500, 37);
-		foldBtn.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
-		foldBtn.setText("Fold It!");		
+		Button undoBtn = new Button(topright, SWT.CENTER);
+		undoBtn.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		undoBtn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		undoBtn.setText("Undo Last Fold");
 		
 		botleft = new Composite(shell, SWT.NONE);
 		GridData gd_botleft = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_botleft.heightHint = 219;
-		gd_botleft.widthHint = 318;
+		gd_botleft.heightHint = 120;
+		gd_botleft.widthHint = 573;
 		botleft.setLayoutData(gd_botleft);
 		
-		foldResponseLbl = new Label(botleft, SWT.NONE);
-		foldResponseLbl.setSize(217, 37);
-		foldResponseLbl.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		foldBtn = new Button(botleft, SWT.NONE);
+		foldBtn.setLocation(0, 0);
+		foldBtn.setSize(500, 43);
+		foldBtn.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+		foldBtn.setText("Fold It!");		
+		
+		botright = new Composite(shell, SWT.NONE);
+		GridData gd_botright = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_botright.heightHint = 219;
+		gd_botright.widthHint = 318;
+		botright.setLayoutData(gd_botright);
+		
+		Label foldResponseLbl = new Label(botright, SWT.WRAP);
 		foldResponseLbl.setAlignment(SWT.CENTER);
+		foldResponseLbl.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		foldResponseLbl.setBounds(0, 0, 217, 43);
 		foldResponseLbl.setText("");
 		
 		foldBtn.addSelectionListener(new SelectionAdapter() {
