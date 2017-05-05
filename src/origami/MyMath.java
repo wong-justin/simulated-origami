@@ -12,35 +12,69 @@ public class MyMath {
 	{
 		return Math.sqrt((p2.x-p1.x)*(p2.x-p1.x) + (p2.y - p1.y)*(p2.y-p1.y));
 	}
-	
-	public static double angleOnCircle(Point pFromCircle) //given point on circle
+	/**
+	 * 
+	 * @param circleP is a point on the circle (not any cursor point)
+	 * @return angle 0 - 360, -1 if theres a problem
+	 */
+	public static double angleOnCircle(Point circleP)
 	{
-		Point baseP = new Point(0, -radius);
-		Point newP = new Point(pFromCircle.x - center.x, pFromCircle.y - center.y);
-		// normalizing new imaginary circle centered at 0,0 
-		// and baseP at the top, treating like regular coordinate plane WLOG
+		Point baseP = new Point(radius, 0);
+		Point newP = new Point(center.y - circleP.y, center.x - circleP.x);
+
+		// normalize to an imaginary circle with center 0,0 and 0 degrees being on pos x-axis
+		// now the calculations are easier
+		// (x,y) -> (y, -x)
+		// circleP.x - center.x, circleP.y - center.y
+		// transforms to
+		// circleP.y - center.y, center.x - circleP
+		// except graphics coordinates reverse y axis direction so now its
+		// -> (-y, -x)
 		
-		// maybe i should normalize to the precalc circle with 0 degrees on pos x-axis?
+		if(circleP.y > center.y)	// changes base of measurement to be accurate near extremities;
+									// however, it means extra "if" statements at end of this method
+									// because there are quadrants to fix
+		{
+			baseP = new Point(-radius, 0);
+		}
+		
 		
 		double dist = distance(newP, baseP);
 
 		double angle = 2 * Math.asin(0.5 * dist / radius); //returns radians -pi/2 to pi/2
 		
-		// 0 = top 	ie p = base
-		// 90 = left
-		// 180/-180 = bot
-		// -90 = right
+		angle *= 180 / Math.PI;			// radians to degrees
 		
-		angle *= 180 / Math.PI;			// to degrees
-		if(pFromCircle.x > center.x)
+		if(circleP.x > center.x ) //fixing each quadrant so final result is 0 - 360
 		{
-			angle = 360 - angle;
+			if(circleP.y < center.y)
+			{
+				angle = 360 - angle;
+			}
+			else
+			{
+				angle += 180;
+			}
 		}
+		else
+		{
+			if(circleP.y > center.y)
+			{
+				angle = 180 - angle;
+			}
+		}
+		
+		if(Double.isNaN(angle))		// trying to be a good boy with error checking thing
+		{
+			return -1;
+		}
+		
 		return angle;
 		
-		// need to fix this now
-		
 		// angles near bottom of circle (180 degrees) are slightly inaccurate; goes 169, 174, 173, 171.9, 180.0, 188, 171.9
+		// edit: fixed this! used another reference point depending on position
+		// i think earlier problem is that 180 got too far away from base point and the differences between points became almost 0; pixels matter
+		// see paint drawing example explanation
 	}
 	
 	public static Point closestPointOnCircle(Point cursor, Point center) //only working for 1/4 of the circle
@@ -197,7 +231,7 @@ public class MyMath {
 		return;
 	}
 	
-	public static Point calcPointGivenAngle(double ang)
+	public static Point calcPointGivenAngle(double ang) //wrong calculations
 	{
 		double xSol = center.x - Math.sin(ang);
 		double ySol = center.y + Math.cos(ang);
