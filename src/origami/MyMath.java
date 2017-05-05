@@ -33,7 +33,10 @@ public class MyMath {
 			angle = 360 - angle;
 		}
 		return angle;
-		 //angles near bottom of circle (180 degrees) are slightly inaccurate; goes 169, 174, 173, 171.9, 180.0, 188, 171.9
+		
+		// going to fix this now
+		
+		// angles near bottom of circle (180 degrees) are slightly inaccurate; goes 169, 174, 173, 171.9, 180.0, 188, 171.9
 	}
 	
 	public static Point closestPointOnCircle(Point cursor, Point center) //only working for 1/4 of the circle
