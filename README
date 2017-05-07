@@ -4,7 +4,7 @@ Created by Justin Wong
 jkwongfl@yahoo.com
 
 First started ~ Jan 2017
-Last updated - May 5, 2017
+Last updated - May 6, 2017
 
 A programming/simulation project to visualize an origami theorem. Intended for educational use.
 
@@ -20,3 +20,14 @@ Known Issues:
 
 Fixed Issues:
 - Angles are not correct, especially around 180 degrees; need to fix math
+
+Other Notes:
+- The .classpath file for the project for eclipse is modified if the reference libraries have a different path
+	(ie different computer)
+	- I should try to have 2 copies of the .classpath file to toggle between home/school
+- There may be non-disposed resources
+
+Features to add:
+- Other demo types (eg. 1D flat folding, fold and one cut)
+- Undo feature
+- Save as other file (eg. vector image, custom file type that saves points/angles?)

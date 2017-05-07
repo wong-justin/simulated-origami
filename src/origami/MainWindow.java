@@ -160,8 +160,21 @@ public class MainWindow implements Observer {
 			public void handleEvent(Event e) {
 				if(e.widget == okHelp)
 				{
+					/*helpWindow.addListener(SWT.Close, new Listener() {
+						
+						public void handleEvent(Event event) {
+							
+					        int style = SWT.APPLICATION_MODAL | SWT.YES | SWT.NO;
+					        MessageBox messageBox = new MessageBox(shell, style);
+					        messageBox.setText("Information");
+					        messageBox.setMessage("Close the shell?");
+					        event.doit = messageBox.open() == SWT.YES;
+					
+					
+					});*/
 					helpWindow.dispose();
 				}
+					
 			}
 		};
 		okHelp.addListener(SWT.Selection, okListener);
