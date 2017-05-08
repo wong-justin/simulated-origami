@@ -14,22 +14,30 @@ Inspired by Erik Demaine's video lectures.
 Known Issues:
 - Saving more than once crashes
 - Clicking "Cancel" in the save dialog crashes
-- Clicking the top-right [X] on the save dialog crashes
+- Clicking the top-right red [X] on the save dialog crashes
 - Clicking help more than once crashes
-- Clicking "Make Foldable" with a blank canvas crashes; need to fix method with array to account for this case
-- Clicking "Fold It!" with a blank canvas crashes; see above
 
 Fixed Issues:
 - Incorrect angles, especially around 180 degrees
+- Clicking "Make Foldable" with a blank canvas crashes; need to fix method with array to account for this case
+- Clicking "Fold It!" with a blank canvas crashes; see above
 
 Other Notes:
 - The .classpath file for the project for eclipse is modified if the reference libraries have a different path
 	(i.e. different computer)
-	- I should try to have 2 copies of the .classpath file to toggle between home/school
+	- Should I try to have 2 copies of the .classpath file to toggle between home/school?
 - There may be non-disposed resources because of some unfamiliarity with SWT
-- Should the program icon be a different file type (e.g. gif or ico)?
+- minor - Should the program icon be a different file type (gif or ico or other)?
 
 Features to add:
 - Other demo types (eg. 1D flat folding, fold and one cut)
 - Undo feature
-- Save as other file (eg. vector image, custom file type that saves points/angles?)
+- Save as other file (eg. vector image, custom file type that saves points/angles)
+	- Open file
+- M/V assignment algorithm 
+	- users M/V assignment (an edit mode of sorts)
+- Toggle mode to hover over a sector and show its angle, rather than just automatically creating temp line on cursor
+- Instead of unrestricted cursor clicks that produce decimal angles, use a snap-to-integer angle system where everything will be integers
+	- This would not only help be more exact (combating the imprecise use of integer pixel coords of SWT Point), 
+	  but also would contribute to a better user/learning experience; user would have more control and it would be easier to 
+	  experiment and produce desired results (e.g. make two sectors of equal size)

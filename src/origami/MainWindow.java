@@ -311,7 +311,7 @@ public class MainWindow implements Observer {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				MyMath.solveFoldablePoints(topPaint.getAngles());
+				MyMath.solveFoldablePoints(topPaint.getAngles(), topPaint.getPoints());
 				topPaint.redraw();		// the official set of arraylist points should be updated to be foldable, so redrawing should show it
 				
 			}
@@ -320,6 +320,13 @@ public class MainWindow implements Observer {
 		solveBtn.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		
 		Button undoBtn = new Button(topright, SWT.CENTER);
+		undoBtn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				topPaint.undoLastFold();
+				topPaint.redraw();
+			}
+		});
 		undoBtn.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		undoBtn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		undoBtn.setText("Undo Last Fold");

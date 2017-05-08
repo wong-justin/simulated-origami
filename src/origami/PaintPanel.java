@@ -74,11 +74,10 @@ public class PaintPanel extends Canvas{
 			{
 				clickedPoint = new Point(e.x, e.y);
 				Point pOnCircumference = MyMath.closestPointOnCircle(clickedPoint, center);
-				// gotta check to make sure not to have 2 of the exact same point
 				
 				for(Point p: points)
 				{
-					if(pOnCircumference.x == p.x && pOnCircumference.y == p.y)
+					if(pOnCircumference.x == p.x && pOnCircumference.y == p.y)	// gotta check to make sure not to have 2 of the exact same point
 					{
 						isSamePoint = true;
 						break;
@@ -88,6 +87,10 @@ public class PaintPanel extends Canvas{
 				{
 					points.add(pOnCircumference);
 					anglesOfPoints.add(MyMath.angleOnCircle(pOnCircumference)); //angles are accurate now; before was using angles based on the click, not the circle; led to wonky numbers
+					
+					// points arr and angles arr correspond at same indices; should never become unaligned (ie diff size or wrong angle for point), 
+					// but i dont check for this; i only manually code methods using points and angles arrays at same time
+					// probably not the best solution to have 2 regular arrays for one conceptual data set
 				}
 				isSamePoint = false;
 				redraw();
@@ -205,6 +208,16 @@ public class PaintPanel extends Canvas{
 		gc.drawLine(center.x, center.y, pOnCircle.x, pOnCircle.y);
 	}
 	
+	public void undoLastFold()
+	{
+		if(points.size() > 0)
+		{	
+			points.remove(points.size()-1);
+			anglesOfPoints.remove(anglesOfPoints.size()-1);
+			redraw();
+		}
+	}
+	
 	public ArrayList<Point> getPoints()
 	{
 		return points;
@@ -254,6 +267,8 @@ public class PaintPanel extends Canvas{
 	{
 		return tAngle;
 	}
+	
+	
 }
 	
 

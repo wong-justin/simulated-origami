@@ -1,0 +1,89 @@
+to check if single vertex M/V is flat foldable:
+
+	kawasaki's thm: sum alternate angles = 180
+	be sure to start at extreme (eg leftmost)
+
+#mountains - #valleys = +/- 2
+
+http://courses.csail.mit.edu/6.849/fall10/lectures/L03.html
+
+	51 mins good time for algorithm implementation
+	try starting with small project and folding single vertex M/V 			patterns on circle
+
+	psuedocode for the aforementioned:
+	- given: flat fold single-vertex crease pattern (simplified as a disk)
+	- find crimp (from maekawa's thm)
+	- apply crimp
+		get cone
+	- repeat?
+	- at end, you will have 2 angles left and 2 equal types (2M or 2V)
+	- then you just squish it -> done
+
+	to note:
+	- no layer ordering
+	- O(n) time?
+	
+
+currently on lecture 04 (as of 2/28/17)
+lecture 5 minute 55 (3/3/17) ~ 1:10:00
+06 36:30 (3/7/17)
+07 	(3/9/17)
+
+	- trees preserve length and connectedness, not really
+	  caring where they're mapped
+	- 
+
+
+*for self - buy Origami Design Secrets (Lang)*
+
+
+
+
+ECLIPSE -
+
+using swt of windowbuilder(3/13/17)
+
+add mouselistener to cavnas (control component too?)
+
+
+SWT Tutorial Help-
+
+
+shell represents the window
+
+Display class is responsible for managing event loops, fonts, colors and for controlling the communication between the UI thread and other threads. Display is the base for all SWT capabilities. (many of the other things extend display)
+	- can only have 1 display at a time (error otherwise)
+
+each shell has at least 1 display
+
+
+hierarchy of swt widgets: http://o7planning.org/en/10179/cache/images/i/16648.png
+
+new -> composite (like a part of the window)
+
+3-29-17 made sure that plugins (eg swt, org.eclipse.layout, etc) were referenceed from shared drive so i can work on multiple school computers
+	be sure to make the demo choices checkable, not just regular menu items edit: all done :)
+
+3-30  cant use canvas super constructor - should move into package to be accessible? build path? edit: fixed by moving plugins locations
+
+4-4-17	back to using canvas as extension class for paintpanel; working on mouse events
+
+4-6-17	the paintpanel is made with a background the same as the background of the screen behind it (like a random chrome tab); minimizing makes points disappear; at least i can click and make points!
+
+	- use redraw();
+	-sometimes calling shell (?) .layout() is the answer?
+
+4-12-17  do all my drawing in the paint event listener and use the gc from the paint event
+		http://stackoverflow.com/questions/30072493/javas-swt-gc-will-not-draw-simple-rectangle-on-a-canvas-but-will-draw-it-on-a
+
+4-14-17  trying to fit in all my paint events to the one paincontrol method in the one paint listener
+		creating points on the circle with math rn
+
+5-2-17	made new project file with old classes; i screwed up the old project trying to build it
+	so use "NewOrigamiProject" instead of "Origamiii"
+
+5-4-17	maybe not; i think trying to use angles screwed it all up
+
+5-8-17	good comments are important!
+
+

@@ -118,6 +118,7 @@ public class MyMath {
 			}
 		}
 		
+		System.out.println("\nLines:");
 		for(double d: arr)
 		{
 			System.out.println(d);				// test to see if angles are correct and if array is sorted
@@ -151,8 +152,8 @@ public class MyMath {
 		}
 		if(a.size() == 0)
 		{
-			System.out.println("No creases to fold");
-			return false;		// or is it true???
+			System.out.println("No creases to fold; technically flat folded");
+			return true;		// or is it false???
 		}
 		
 		double[] arr = anglesBetweenCreases(a);
@@ -174,7 +175,7 @@ public class MyMath {
 		// current problem - angles near bottom are inaccurate
 	}
 	
-	public static void solveFoldablePoints(ArrayList<Double> angs)		// It's void b/c i will be modifying the pts arraylist from paintpanel directly by adding or modifying it (object by reference blah blah))
+	public static void solveFoldablePoints(ArrayList<Double> angs, ArrayList<Point> pts)		// It's void b/c i will be modifying the pts arraylist from paintpanel directly by adding or modifying it (object by reference blah blah))
 	{																	// i could approach this as finding the smallest change possible (ie wouldnt move a line 90 degrees around if 
 																		// i could move a different one only 10); this would involve more computation and work to find best case scenario
 																		// it's already 4-27 and i dont know if i could implement this in time RIP; this would demonstrate the most knowledge tho (ie coolest)
@@ -184,15 +185,14 @@ public class MyMath {
 			return;
 		}
 		
-		double[] angsBtwn = anglesBetweenCreases(angs);
+		double[] angsBtwn = anglesBetweenCreases(angs);		// should be easier to work with arr instead of arrList;
+															// also dont want to modify/reorder the arrList passed in until im ready
 		
-		if(angs.size() % 2 == 0)
-		{
-			// adjust one point; maybe ill have to adjust more than one?
-			
-			// psuedocode:
+		if(angs.size() % 2 == 0)		// adjust one point; maybe ill have to adjust more than one?
+		{			
+			// pseudocode:
 			// 
-			// (360 - halfanglesum) / 2 = difference			// amount i need to move a crease by
+			// 180 - altAngleSum = difference			// amount i need to move a crease by so that it will equal 180 in end
 			// search for a point that i could move by that much; i think there
 			// will be some that i couldnt move while keeping within other creases
 			// 
@@ -200,17 +200,92 @@ public class MyMath {
 			// make new point out of new angle
 			// replace old point with new point
 			// 
-			// theres probably a better solution out there
+			// there will be multiple possible points that can be moved by this angleDifference
+			// the cheap solution is to just use the first one that works
+			// - going to do this in the interest of completion deadline
+			//
+			// there's probably a better solution anyways
+			//
 			
 			double alternatingAngleSum = 0;
 			for(int i = 0; i < angsBtwn.length; i+=2)
 			{
-				alternatingAngleSum += angsBtwn[i]; 	//sum of even index half
+				alternatingAngleSum += angsBtwn[i]; 	// sum of even index half; i think its important to know that its the even angles
 			}
 			
-			double angleDiffToMoveBy = (180 - alternatingAngleSum)/2;	//if positive, means that the even indices sum < 180
+			double angleDiffToMoveBy = Math.abs(180 - alternatingAngleSum);	//if positive, means that the even-indices angles sum is < 180
+																			// im only using the abs value for the particular solution at hand tho
+																			// should revert back and keep sign (no abs) for better solution in the future
 			
-			// find a point that can move
+			// cheap solution to find one point that would work
+			
+			// I postulate that the altAngleSum containing the largest angle will be > 180
+			// 		- except case of multiple equal largest angles; happily ignoring for now...
+			// Moreover, this angle will be larger than the abs value of angleDiffToMoveBy (which is 180 - altSum)
+			
+			// find index of largest ang
+			int tempMaxLoc = 0;
+			for(int i = 0; i < angsBtwn.length; i++)
+			{
+				if(angsBtwn[tempMaxLoc] < angsBtwn[i])
+				{
+					tempMaxLoc = i;
+				}
+			}
+			
+			// decrease corresponding angle in the arraylist
+			// must increase adj angle in return to keep everything = 360
+			// 		- which angle is adjacent? "behind" or "in front"? so many choices
+			// 		- going to arbitrarily choose "in front" for now
+			
+			int adjLoc;			// circle angles loop around; last angle is adj to first
+			if(tempMaxLoc == angs.size()) {
+				adjLoc = 0;
+			}
+			else {
+				adjLoc = tempMaxLoc + 1;
+			}
+			
+			
+			double newAng = angs.get(tempMaxLoc) - angleDiffToMoveBy;
+			if(newAng < 0)				// now it wont go below 0 and instead wrap around like a good circle
+			{
+				newAng = 360 + newAng;
+			}
+			
+			angs.set(tempMaxLoc, newAng);		// can go below 0!!!
+			pts.set(tempMaxLoc, calcPointGivenAngle(angs.get(tempMaxLoc)));
+			
+			
+			
+			
+			angs.set(adjLoc, angs.get(adjLoc) + angleDiffToMoveBy);
+			pts.set(adjLoc, calcPointGivenAngle(angs.get(adjLoc)));
+			
+			// problems so far:
+			// - somehow adds angles to arrList; i can see it in the console prints after clicking fold it
+			// - made some angles negative..
+			// 
+			// some noted causes/bad things:
+			// - pts and angs from paintpanel are in chronological order of clicks, not order around the circle
+			//		- good for undo btn
+			// 		- bad for everything else
+			//
+			//		- solution: automatically put angle/point in ordered position in array upon clicking 
+			//		- would require changing undo btn a little, but thats ok because undo isnt as important
+			// - im treating angs like ansBtwn, but angs are actually the 0 to 360 representations of the creases!
+			// - i forgot that calcPointGivenAngle is already screwy; gotta fix that math if i expect this whole thing to work
+			//
+			// if i solve all these probs then i think it should work
+			// but what do i know
+			
+			
+			
+			
+			
+			
+			// find the points that can move; finish implementing me justiiiinnnnn
+			/*
 			ArrayList<Integer> angsThatCanChange = new ArrayList<Integer>();		// is the index of the angle to change (instead of value); it will be increased if alternatinganglesum is < 180 or decreased otherwise
 			for(int i = 0; i < angsBtwn.length-1; i++)	// am i guaranteed to find one?
 			{
@@ -224,12 +299,11 @@ public class MyMath {
 				// find the smallest necessary change out of possible angs in angsThatCanChange?
 				
 				
-			}
-		
+			}*/
 		}
-		else
+		else	// there are an odd number of angs and you gotta add one; maybe ill have to add a point and shift another as well?
 		{
-			// its an odd number and you gotta add a point; maybe ill have to add a point and change another as well?
+
 		}
 		
 		System.out.println("Now it should fold.");
