@@ -32,6 +32,7 @@ public class PaintPanel extends Canvas{
 	private Point clickedPoint;
 	private boolean isSamePoint;
 	private double tempAngle;
+	private double lastIndex;
 	private GC gc;
 	private ObservableAngle tAngle = new ObservableAngle();
 	
@@ -74,6 +75,7 @@ public class PaintPanel extends Canvas{
 			{
 				clickedPoint = new Point(e.x, e.y);
 				Point pOnCircumference = MyMath.closestPointOnCircle(clickedPoint, center);
+				double angl = MyMath.angleOnCircle(pOnCircumference);
 				
 				for(Point p: points)
 				{
@@ -85,8 +87,22 @@ public class PaintPanel extends Canvas{
 				}
 				if(!isSamePoint)
 				{
-					points.add(pOnCircumference);
-					anglesOfPoints.add(MyMath.angleOnCircle(pOnCircumference)); //angles are accurate now; before was using angles based on the click, not the circle; led to wonky numbers
+					// add it in the proper order instead of at end (which is chronological)
+					
+					int i;
+					for(i = 0; i < anglesOfPoints.size(); i ++)
+					{
+						
+					}
+					
+					
+					
+					
+					
+					
+					
+					points.add(i, pOnCircumference);
+					anglesOfPoints.add(i, angl);			//angles are accurate now; before was using angles based on the click, not the circle; led to wonky numbers
 					
 					// points arr and angles arr correspond at same indices; should never become unaligned (ie diff size or wrong angle for point), 
 					// but i dont check for this; i only manually code methods using points and angles arrays at same time

@@ -221,9 +221,10 @@ public class MyMath {
 			
 			// I postulate that the altAngleSum containing the largest angle will be > 180
 			// 		- except case of multiple equal largest angles; happily ignoring for now...
-			// Moreover, this angle will be larger than the abs value of angleDiffToMoveBy (which is 180 - altSum)
+			// Moreover, this angle will be larger than the abs value of angleDiffToMoveBy (which is 180 - alternatingAngleSum)
+			// 		- it follows that i will be able to reduce that angle by the diff and increase an adjacent angle by the diff
 			
-			// find index of largest ang
+			// find index of largest sector angle
 			int tempMaxLoc = 0;
 			for(int i = 0; i < angsBtwn.length; i++)
 			{
@@ -273,7 +274,11 @@ public class MyMath {
 			//
 			//		- solution: automatically put angle/point in ordered position in array upon clicking 
 			//		- would require changing undo btn a little, but thats ok because undo isnt as important
+			//
 			// - im treating angs like ansBtwn, but angs are actually the 0 to 360 representations of the creases!
+			// 		- solution: 
+			// 			...
+			//
 			// - i forgot that calcPointGivenAngle is already screwy; gotta fix that math if i expect this whole thing to work
 			//
 			// if i solve all these probs then i think it should work
@@ -283,8 +288,8 @@ public class MyMath {
 			
 			
 			
-			
-			// find the points that can move; finish implementing me justiiiinnnnn
+			// finish implementing me justiiiinnnnn
+			// find the points that can move
 			/*
 			ArrayList<Integer> angsThatCanChange = new ArrayList<Integer>();		// is the index of the angle to change (instead of value); it will be increased if alternatinganglesum is < 180 or decreased otherwise
 			for(int i = 0; i < angsBtwn.length-1; i++)	// am i guaranteed to find one?
