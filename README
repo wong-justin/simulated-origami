@@ -4,11 +4,12 @@ Created by Justin Wong
 jkwongfl@yahoo.com
 
 First started ~ Jan 2017
-Last updated - May 6, 2017
+Last updated - May 8, 2017
 
-A programming/simulation project to visualize an origami theorem. Intended for educational use.
+A programming/simulation project to visualize an origami theorem. 
+Intended for educational use. It is made as an SWT Project in Eclipse.
 
-Inspired by Erik Demaine's viedo lectures.
+Inspired by Erik Demaine's video lectures.
 
 Known Issues:
 - Saving more than once crashes
@@ -19,13 +20,14 @@ Known Issues:
 - Clicking "Fold It!" with a blank canvas crashes; see above
 
 Fixed Issues:
-- Angles are not correct, especially around 180 degrees; need to fix math
+- Incorrect angles, especially around 180 degrees
 
 Other Notes:
 - The .classpath file for the project for eclipse is modified if the reference libraries have a different path
-	(ie different computer)
+	(i.e. different computer)
 	- I should try to have 2 copies of the .classpath file to toggle between home/school
-- There may be non-disposed resources
+- There may be non-disposed resources because of some unfamiliarity with SWT
+- Should the program icon be a different file type (e.g. gif or ico)?
 
 Features to add:
 - Other demo types (eg. 1D flat folding, fold and one cut)

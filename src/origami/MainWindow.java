@@ -70,7 +70,7 @@ public class MainWindow implements Observer {
 		display = Display.getDefault();
 		createContents();
 		
-		Image icon = new Image(Display.getCurrent(), "testicon4.jpg");
+		Image icon = new Image(Display.getCurrent(), "appicon.jpg");
 		
 		shell.setImage(icon);
 		
