@@ -74,7 +74,7 @@ public class PaintPanel extends Canvas{
 			public void mouseDown(MouseEvent e)
 			{
 				clickedPoint = new Point(e.x, e.y);
-				Point pOnCircumference = MyMath.closestPointOnCircle(clickedPoint, center);
+				Point pOnCircumference = MyMath.closestPointOnCircle(clickedPoint);
 				double angl = MyMath.angleOnCircle(pOnCircumference);
 				
 				for(Point p: points)
@@ -110,7 +110,7 @@ public class PaintPanel extends Canvas{
 			
 			public void mouseMove(MouseEvent e)
 			{				
-				setTempPoint(MyMath.closestPointOnCircle(new Point(e.x, e.y), center));
+				setTempPoint(MyMath.closestPointOnCircle(new Point(e.x, e.y)));
 				tempAngle = MyMath.angleOnCircle(tempPoint);					// this is not the main tempangle; the real thing is housed in the observable angle object so that other class can observe it
 				
 				tAngle.setAngle(tempAngle);				// this is the important one to change (the observable object)
@@ -236,21 +236,20 @@ public class PaintPanel extends Canvas{
 	 */
 	private int putAngleInOrder(double a)
 	{
+		// lucky for you thats what i like
+		
 		if(anglesOfPoints.size() == 0)
 		{
 			anglesOfPoints.add(a);
 			return 0;
 		}
 		
-		int i;
-		// lucky for you thats what i like
-		anglesOfPoints.add(anglesOfPoints.get(anglesOfPoints.size()-1));		// put the last element in the next index (gotta add one to make sure size gets increased)
-		for(i = anglesOfPoints.size()-1; i > 0 && anglesOfPoints.get(i) > a; i--)
+		int i = anglesOfPoints.size()-1;
+		while(i > 0 && anglesOfPoints.get(i) > a)
 		{
-			anglesOfPoints.set(i, anglesOfPoints.get(i-1));
+			i--;
 		}
-		anglesOfPoints.set(i, a);
-		
+		anglesOfPoints.add(i, a);
 		return i;
 	}
 	
@@ -267,34 +266,7 @@ public class PaintPanel extends Canvas{
 			return;
 		}
 		
-		points.add(points.get(points.size()-1));
-		for(int j = points.size()-1; j >= loc; j--)
-		{
-			points.set(j, points.get(j-1));			// shift them all up
-		}
-		points.set(loc, p);
-	}
-	
-	public int addAngleInOrder(double a)
-	{
-		int i;
-		for(i = anglesOfPoints.size()-1; a < anglesOfPoints.get(i) && i >= 0; i--)
-		{
-			anglesOfPoints.set(i+1, anglesOfPoints.get(i));
-		}
-		i += 1;		// counteracts the last i-- iteration
-		anglesOfPoints.set(i, a);
-		
-		return i;
-	}
-	
-	public void addPointInOrder(int loc, Point p)
-	{
-		for(int i = points.size()-1; i >= loc; i--)
-		{
-			points.set(i+1, points.get(i));
-		}
-		points.set(loc, p);		
+		points.add(loc, p);
 	}
 	
 	public ArrayList<Point> getPoints()

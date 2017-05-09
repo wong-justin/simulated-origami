@@ -8,13 +8,19 @@ public class MyMath {
 	private static int radius;
 	private static Point center;
 	
+	/**
+	 * math from pythagorean thm
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
 	public static double distance(Point p1, Point p2)
 	{
 		return Math.sqrt((p2.x-p1.x)*(p2.x-p1.x) + (p2.y - p1.y)*(p2.y-p1.y));
 	}
 	/**
 	 * 
-	 * @param circleP is a point on the circle (not any cursor point)
+	 * @param circleP is a point on the circle circumference (not just any cursor point)
 	 * @return angle 0 - 360, -1 if theres a problem
 	 */
 	public static double angleOnCircle(Point circleP)
@@ -33,7 +39,7 @@ public class MyMath {
 		
 		if(circleP.y > center.y)	// changes base of measurement to be accurate near extremities;
 									// however, it means extra "if" statements at end of this method
-									// because there are quadrants to fix
+									// because there are quadrants to account for
 		{
 			baseP = new Point(-radius, 0);
 		}
@@ -77,7 +83,13 @@ public class MyMath {
 		// see paint drawing example explanation
 	}
 	
-	public static Point closestPointOnCircle(Point cursor, Point center) //only working for 1/4 of the circle
+	/**
+	 * Used to find the line that 'follows' the cursor
+	 * @param cursor
+	 * @param center
+	 * @return
+	 */
+	public static Point closestPointOnCircle(Point cursor) //only working for 1/4 of the circle
 	{
 		// need to find a solution more accurate (especially near bottom of circle)
 		
@@ -106,8 +118,8 @@ public class MyMath {
 			arr[i] = a.get(i);
 		}
 		
-		/*for(int i = 1; i < arr.length; i++)		// selection sort? to order the crease angles from 0 to 360
-		{											// should be sorted now in paintpanel
+		for(int i = 1; i < arr.length; i++)		// selection sort? to order the crease angles from 0 to 360
+		{											// should be sorted now in paintpanel but it isnt; ideally wont need this sort
 			int j = i;
 			while(j > 0 && arr[j] < arr[j-1])
 			{
@@ -116,7 +128,7 @@ public class MyMath {
 				arr[j-1] = temp;
 				j--;
 			}
-		}*/
+		}
 		
 		System.out.println("\nLines:");
 		for(double d: arr)
@@ -215,14 +227,14 @@ public class MyMath {
 																			// im only using the abs value for the particular solution at hand tho
 																			// should revert back and keep sign (no abs) for better solution in the future
 			
-			// cheap solution to find one point that would work
+			// cheap solution to find one point that would work rather than multiple
 			
 			// I postulate that the altAngleSum containing the largest angle will be > 180
 			// 		- except case of multiple equal largest angles; happily ignoring for now...
 			// Moreover, this angle will be larger than the abs value of angleDiffToMoveBy (which is 180 - alternatingAngleSum)
 			// 		- it follows that i will be able to reduce that angle by the diff and increase an adjacent angle by the diff
 			
-			// find index of largest sector angle
+			// find index of largest sector angle; for better solution in future i could find any angs (included in the larger sum) that are larger than the angle difference
 			int tempMaxLoc = 0;
 			for(int i = 0; i < angsBtwn.length; i++)
 			{
@@ -235,35 +247,28 @@ public class MyMath {
 			// decrease corresponding angle in the arraylist
 			// must increase adj angle in return to keep everything = 360
 			// 		- which angle is adjacent? "behind" or "in front"? so many choices
-			// 		- going to arbitrarily choose "in front" for now
-			
-			int adjLoc;			// circle angles loop around; last angle is adj to first
-			if(tempMaxLoc == angs.size()) {
-				adjLoc = 0;
-			}
-			else {
-				adjLoc = tempMaxLoc + 1;
-			}
+			// 		- going to arbitrarily choose "behind" for now
+			//			- actually not as arbitrary since angsBtwn are bounded by thisangle and thisangle-1 (the -1 will be the adj one)
+			// EDIT: dont need any adj angle because only one line moves (one angle and one point;
+			// no need to adjust and treat like an angle btwn)
 			
 			
-			double newAng = angs.get(tempMaxLoc) - angleDiffToMoveBy;
+			// problem starts below; need to get the proper line angle from angs rather than just angleBtwn
+			
+			double newAng = angs.get(tempMaxLoc) - angleDiffToMoveBy;		//angs.get something else
 			if(newAng < 0)				// now it wont go below 0 and instead wrap around like a good circle
 			{
 				newAng = 360 + newAng;
 			}
 			
-			angs.set(tempMaxLoc, newAng);		// can go below 0!!!
-			pts.set(tempMaxLoc, calcPointGivenAngle(angs.get(tempMaxLoc)));
-			
-			
-			
-			
-			angs.set(adjLoc, angs.get(adjLoc) + angleDiffToMoveBy);
-			pts.set(adjLoc, calcPointGivenAngle(angs.get(adjLoc)));
+			angs.set(tempMaxLoc, newAng);
+			pts.set(tempMaxLoc, calcPointGivenAngle(angs.get(tempMaxLoc)));	
+				
 			
 			// problems so far:
 			// - somehow adds angles to arrList; i can see it in the console prints after clicking fold it
 			// - made some angles negative..
+			// - pts array is not in order of angles (ie not corresponding)
 			// 
 			// some noted causes/bad things:
 			// - pts and angs from paintpanel are in chronological order of clicks, not order around the circle
@@ -278,6 +283,7 @@ public class MyMath {
 			// 			...
 			//
 			// - i forgot that calcPointGivenAngle is already screwy; gotta fix that math if i expect this whole thing to work
+			// edit: calcPoint may be fixed
 			//
 			// if i solve all these probs then i think it should work
 			// but what do i know
@@ -313,10 +319,10 @@ public class MyMath {
 		return;
 	}
 	
-	public static Point calcPointGivenAngle(double ang) //wrong calculations
+	public static Point calcPointGivenAngle(double ang) //wrong calculations;
 	{
-		double xSol = center.x - Math.sin(ang);
-		double ySol = center.y + Math.cos(ang);
+		double xSol = center.x - radius*Math.sin(ang);
+		double ySol = center.y + radius*Math.cos(ang);
 		
 		return new Point((int) xSol, (int) ySol);
 	}
