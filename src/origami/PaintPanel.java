@@ -87,10 +87,17 @@ public class PaintPanel extends Canvas{
 				}
 				if(!isSamePoint)
 				{
+<<<<<<< HEAD
 					int i = putAngleInOrder(angl);
 					putPointInOrder(pOnCircumference, i);
 					
 					lastIndices.add(i);
+=======
+					// add it in the proper order instead of at end (which is chronological)	
+										
+					int i = addAngleInOrder(angl);
+					addPointInOrder(i, pOnCircumference);			//angles are accurate now; before was using angles based on the click, not the circle; led to wonky numbers
+>>>>>>> 3aeee346ea5d4eff487f31c97dfd980768fd9922
 					
 					// points arr and angles arr correspond at same indices; should never become unaligned (ie diff size or wrong angle for point), 
 					// but i dont check for this; i only manually code methods using points and angles arrays at same time
@@ -212,6 +219,7 @@ public class PaintPanel extends Canvas{
 		gc.drawLine(center.x, center.y, pOnCircle.x, pOnCircle.y);
 	}
 	
+<<<<<<< HEAD
 	public void undoLastFold()		// will need revision
 	{
 		int k = lastIndices.size();
@@ -258,6 +266,9 @@ public class PaintPanel extends Canvas{
 	 * @param loc where to put it
 	 */
 	private void putPointInOrder(Point p, int loc)
+=======
+	public void undoLastFold()		// will have to fix
+>>>>>>> 3aeee346ea5d4eff487f31c97dfd980768fd9922
 	{
 		if(loc == 0)
 		{
@@ -271,6 +282,28 @@ public class PaintPanel extends Canvas{
 			points.set(j, points.get(j-1));			// shift them all up
 		}
 		points.set(loc, p);
+	}
+	
+	public int addAngleInOrder(double a)
+	{
+		int i;
+		for(i = anglesOfPoints.size()-1; a < anglesOfPoints.get(i) && i >= 0; i--)
+		{
+			anglesOfPoints.set(i+1, anglesOfPoints.get(i));
+		}
+		i += 1;		// counteracts the last i-- iteration
+		anglesOfPoints.set(i, a);
+		
+		return i;
+	}
+	
+	public void addPointInOrder(int loc, Point p)
+	{
+		for(int i = points.size()-1; i >= loc; i--)
+		{
+			points.set(i+1, points.get(i));
+		}
+		points.set(loc, p);		
 	}
 	
 	public ArrayList<Point> getPoints()
