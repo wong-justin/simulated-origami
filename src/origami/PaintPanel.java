@@ -32,7 +32,7 @@ public class PaintPanel extends Canvas{
 	private Point clickedPoint;
 	private boolean isSamePoint;
 	private double tempAngle;
-	private double lastIndex;
+	private ArrayList<Integer> lastIndices = new ArrayList<Integer>();
 	private GC gc;
 	private ObservableAngle tAngle = new ObservableAngle();
 	
@@ -87,22 +87,10 @@ public class PaintPanel extends Canvas{
 				}
 				if(!isSamePoint)
 				{
-					// add it in the proper order instead of at end (which is chronological)
+					int i = putAngleInOrder(angl);
+					putPointInOrder(pOnCircumference, i);
 					
-					int i;
-					for(i = 0; i < anglesOfPoints.size(); i ++)
-					{
-						
-					}
-					
-					
-					
-					
-					
-					
-					
-					points.add(i, pOnCircumference);
-					anglesOfPoints.add(i, angl);			//angles are accurate now; before was using angles based on the click, not the circle; led to wonky numbers
+					lastIndices.add(i);
 					
 					// points arr and angles arr correspond at same indices; should never become unaligned (ie diff size or wrong angle for point), 
 					// but i dont check for this; i only manually code methods using points and angles arrays at same time
@@ -196,9 +184,9 @@ public class PaintPanel extends Canvas{
 		
 	}*/
 	/**
-	 * The drawing that is currently on the canvas is put into a given image
+	 * The drawing that is currently on the canvas is put into a given image object
 	 * @param i
-	 * @return
+	 * @return the image object that was passed in, this time filled with imagey stuff
 	 */
 	public Image getCanvasImage(Image i)
 	{
@@ -224,14 +212,65 @@ public class PaintPanel extends Canvas{
 		gc.drawLine(center.x, center.y, pOnCircle.x, pOnCircle.y);
 	}
 	
-	public void undoLastFold()
+	public void undoLastFold()		// will need revision
 	{
-		if(points.size() > 0)
-		{	
-			points.remove(points.size()-1);
-			anglesOfPoints.remove(anglesOfPoints.size()-1);
-			redraw();
+		int k = lastIndices.size();
+		if(k != 0)
+		{
+			anglesOfPoints.remove(k-1);
+			points.remove(k-1);
+			lastIndices.remove(k-1);
 		}
+	}
+	
+	/** Inputs a given angle into the private field array of angles
+	 * Its proper location is where it fits in the list of increasing order
+	 * anglesArray should always be sorted
+	 * 
+	 * also returns the index it went into for the purposes of other methods that need it (ie points array)
+	 * 
+	 * @param a is input angle
+	 * @return the index of anglesOfPoints that 'a' went into
+	 */
+	private int putAngleInOrder(double a)
+	{
+		if(anglesOfPoints.size() == 0)
+		{
+			anglesOfPoints.add(a);
+			return 0;
+		}
+		
+		int i;
+		// lucky for you thats what i like
+		anglesOfPoints.add(anglesOfPoints.get(anglesOfPoints.size()-1));		// put the last element in the next index (gotta add one to make sure size gets increased)
+		for(i = anglesOfPoints.size()-1; i > 0 && anglesOfPoints.get(i) > a; i--)
+		{
+			anglesOfPoints.set(i, anglesOfPoints.get(i-1));
+		}
+		anglesOfPoints.set(i, a);
+		
+		return i;
+	}
+	
+	/** Follows putAngleInOrder
+	 * 
+	 * @param p
+	 * @param loc where to put it
+	 */
+	private void putPointInOrder(Point p, int loc)
+	{
+		if(loc == 0)
+		{
+			points.add(p);
+			return;
+		}
+		
+		points.add(points.get(points.size()-1));
+		for(int j = points.size()-1; j >= loc; j--)
+		{
+			points.set(j, points.get(j-1));			// shift them all up
+		}
+		points.set(loc, p);
 	}
 	
 	public ArrayList<Point> getPoints()
@@ -252,6 +291,16 @@ public class PaintPanel extends Canvas{
 	public void setAngles(ArrayList<Double> arr)
 	{
 		anglesOfPoints = arr;
+	}
+	
+	public ArrayList<Integer> getLastIndices()
+	{
+		return lastIndices;
+	}
+	
+	public void setLastIndices(ArrayList<Integer> a)
+	{
+		lastIndices = a;
 	}
 	
 	public int getRadius()

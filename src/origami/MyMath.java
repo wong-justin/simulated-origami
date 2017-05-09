@@ -106,8 +106,8 @@ public class MyMath {
 			arr[i] = a.get(i);
 		}
 		
-		for(int i = 1; i < arr.length; i++)		// selection sort? to order the crease angles from 0 to 360
-		{
+		/*for(int i = 1; i < arr.length; i++)		// selection sort? to order the crease angles from 0 to 360
+		{											// should be sorted now in paintpanel
 			int j = i;
 			while(j > 0 && arr[j] < arr[j-1])
 			{
@@ -116,7 +116,7 @@ public class MyMath {
 				arr[j-1] = temp;
 				j--;
 			}
-		}
+		}*/
 		
 		System.out.println("\nLines:");
 		for(double d: arr)
@@ -169,10 +169,8 @@ public class MyMath {
 		}
 		System.out.println("Sum of alternating half: " + halfAngleSum);
 		
-		return halfAngleSum > 178 && halfAngleSum < 182; //if the angle sum is about 180	
-		// margin of error is arbitrarily 2.0 degrees; physical folding test shows it's pretty foldable
-		
-		// current problem - angles near bottom are inaccurate
+		return halfAngleSum > 178 && halfAngleSum < 182; // aka. if the angle sum is about 180	
+		// margin of error is arbitrarily 2.0 degrees; physical folding test shows it's pretty foldable with that margin
 	}
 	
 	public static void solveFoldablePoints(ArrayList<Double> angs, ArrayList<Point> pts)		// It's void b/c i will be modifying the pts arraylist from paintpanel directly by adding or modifying it (object by reference blah blah))
