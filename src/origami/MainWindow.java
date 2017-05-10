@@ -300,7 +300,8 @@ public class MainWindow implements Observer {
 				
 				topPaint.setAngles(new ArrayList<Double>(0));		// set angles array empty
 				topPaint.setPoints(new ArrayList<Point>(0));
-				topPaint.setLastIndices(new ArrayList<Integer>(0));
+				//topPaint.setLastIndices(new ArrayList<Integer>(0));
+				topPaint.setLastIndex(-1);
 				topPaint.redraw();
 			}
 		});

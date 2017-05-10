@@ -32,7 +32,8 @@ public class PaintPanel extends Canvas{
 	private Point clickedPoint;
 	private boolean isSamePoint;
 	private double tempAngle;
-	private ArrayList<Integer> lastIndices = new ArrayList<Integer>();
+	//private ArrayList<Integer> lastIndices = new ArrayList<Integer>();		// wasn't working well; will replace with only one undo possible at a time (like the dumb photoshop undo)
+	private int lastIndex = -1;
 	private GC gc;
 	private ObservableAngle tAngle = new ObservableAngle();
 	
@@ -87,11 +88,22 @@ public class PaintPanel extends Canvas{
 				}
 				if(!isSamePoint)
 				{
-					int i = putAngleInOrder(angl);
-					putPointInOrder(pOnCircumference, i);
+					//int i = putAngleInOrder(angl);
+					//putPointInOrder(pOnCircumference, i);
 					
-					lastIndices.add(i);
+					//lastIndices.add(i);
+					
+					//lastIndex = i;
 					// add it in the proper order instead of at end (which is chronological)	
+					
+					// all this above would be ideal but in the interest of making it work im just adding to end of lists
+					
+					
+					anglesOfPoints.add(angl);
+					points.add(pOnCircumference);
+					lastIndex++;
+			
+					
 
 					
 					// points arr and angles arr correspond at same indices; should never become unaligned (ie diff size or wrong angle for point), 
@@ -214,15 +226,15 @@ public class PaintPanel extends Canvas{
 		gc.drawLine(center.x, center.y, pOnCircle.x, pOnCircle.y);
 	}
 	
-	public void undoLastFold()		// will need revision
+	public void undoLastFold()
 	{
-		int k = lastIndices.size();
-		if(k != 0)
+		if(lastIndex >= 0 && points.size() != 0)
 		{
-			anglesOfPoints.remove(k-1);
-			points.remove(k-1);
-			lastIndices.remove(k-1);
+			anglesOfPoints.remove(lastIndex);
+			points.remove(lastIndex);
+			lastIndex--;
 		}
+		return;
 	}
 	
 	/** Inputs a given angle into the private field array of angles
@@ -289,7 +301,7 @@ public class PaintPanel extends Canvas{
 		anglesOfPoints = arr;
 	}
 	
-	public ArrayList<Integer> getLastIndices()
+	/*public ArrayList<Integer> getLastIndices()
 	{
 		return lastIndices;
 	}
@@ -297,6 +309,16 @@ public class PaintPanel extends Canvas{
 	public void setLastIndices(ArrayList<Integer> a)
 	{
 		lastIndices = a;
+	}*/
+	
+	public int getLastIndex()
+	{
+		return lastIndex;
+	}
+	
+	public void setLastIndex(int i)
+	{
+		lastIndex = i;
 	}
 	
 	public int getRadius()

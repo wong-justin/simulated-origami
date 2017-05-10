@@ -86,4 +86,5 @@ new -> composite (like a part of the window)
 
 5-8-17	good comments are important!
 
+5-10-17	presentation tmrw; if you click "Fold It!" enough, eventually it will work for an even number of creases
 

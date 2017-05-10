@@ -1,5 +1,6 @@
 package origami;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import org.eclipse.swt.graphics.Point;
 
@@ -7,6 +8,7 @@ public class MyMath {
 	
 	private static int radius;
 	private static Point center;
+	private static final double MARGIN_OF_ERROR = 2;	// to account for user imprecision
 	
 	/**
 	 * math from pythagorean thm
@@ -110,6 +112,22 @@ public class MyMath {
 		// point.x = center.x + (int) Math.round(Math.sqrt(r*r - (point.y - center.y)*(point.y - center.y))); //other math
 	}
 	
+	public static double[] selectionSort(double[] a)
+	{
+		for(int i = 1; i < a.length; i++)		// selection sort? to order the crease angles from 0 to 360
+		{											// should be sorted now in paintpanel but it isnt; ideally wont need this sort
+			int j = i;
+			while(j > 0 && a[j] < a[j-1])
+			{
+				double temp = a[j];
+				a[j] = a[j-1];
+				a[j-1] = temp;
+				j--;
+			}
+		}
+		return a;
+	}
+	
 	public static double[] anglesBetweenCreases(ArrayList<Double> a)
 	{
 		double[] arr = new double[a.size()];		// must put into new array because it was modifying old arraylist from paintpanel, messing up any later fold requests
@@ -118,17 +136,7 @@ public class MyMath {
 			arr[i] = a.get(i);
 		}
 		
-		for(int i = 1; i < arr.length; i++)		// selection sort? to order the crease angles from 0 to 360
-		{											// should be sorted now in paintpanel but it isnt; ideally wont need this sort
-			int j = i;
-			while(j > 0 && arr[j] < arr[j-1])
-			{
-				double temp = arr[j];
-				arr[j] = arr[j-1];
-				arr[j-1] = temp;
-				j--;
-			}
-		}
+		arr = selectionSort(arr);
 		
 		System.out.println("\nLines:");
 		for(double d: arr)
@@ -181,7 +189,7 @@ public class MyMath {
 		}
 		System.out.println("Sum of alternating half: " + halfAngleSum);
 		
-		return halfAngleSum > 178 && halfAngleSum < 182; // aka. if the angle sum is about 180	
+		return Math.abs(180-halfAngleSum) <= MARGIN_OF_ERROR; // aka. if the angle sum is about 180	
 		// margin of error is arbitrarily 2.0 degrees; physical folding test shows it's pretty foldable with that margin
 	}
 	
@@ -197,6 +205,13 @@ public class MyMath {
 		
 		double[] angsBtwn = anglesBetweenCreases(angs);		// should be easier to work with arr instead of arrList;
 															// also dont want to modify/reorder the arrList passed in until im ready
+		
+		double[] angles = new double[angs.size()];		// must put into new array because it was modifying old arraylist from paintpanel, messing up any later fold requests
+		for(int i = 0; i < angs.size(); i++)
+		{
+			angles[i] = angs.get(i);
+		}
+		angles = selectionSort(angles);
 		
 		if(angs.size() % 2 == 0)		// adjust one point; maybe ill have to adjust more than one?
 		{			
@@ -319,10 +334,10 @@ public class MyMath {
 		return;
 	}
 	
-	public static Point calcPointGivenAngle(double ang) //wrong calculations;
+	public static Point calcPointGivenAngle(double ang) //wrong calculations; i was using degrees instead of radians!!!
 	{
-		double xSol = center.x - radius*Math.sin(ang);
-		double ySol = center.y + radius*Math.cos(ang);
+		double xSol = center.x + radius*Math.cos((ang+90)*Math.PI/180);
+		double ySol = center.y - radius*Math.sin((ang+90)*Math.PI/180);
 		
 		return new Point((int) xSol, (int) ySol);
 	}

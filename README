@@ -4,7 +4,7 @@ Created by Justin Wong
 jkwongfl@yahoo.com
 
 First started ~ Jan 2017
-Last updated - May 8, 2017
+Last updated - May 10, 2017
 
 A programming/simulation project to visualize an origami theorem. 
 Intended for educational use. It is made as an SWT Project in Eclipse.
@@ -16,19 +16,23 @@ Known Issues:
 - Clicking "Cancel" in the save dialog crashes
 - Clicking the top-right red [X] on the save dialog crashes
 - Clicking help more than once crashes
-- Undo does not perform correctly chronologically all the time, especially with several folds present
-- Undo messes up future 'fold it' calls so that some things are negative and not displayed correctly
-	- maybe Undo should be avoided for now altogether :(
 - Some angles arent actually added in order; sometimes correct, just depends on where new folds are created and which order
 	- example - clicking 95 -> 150 -> 290 -> 310 could produce diff results than clicking
 	  290 -> 95 -> 310 -> 150
 	- this means that my putInOrder methods are bad; should fix
-	- quick fix - keep selection sort in the fold it method 
+	- quick fix - keep selection sort in the fold it method
+- Fold It is unimplemented for an odd number of creases
+	- Fold It will not always work the first time for an even number of creases; must keep clicking
+- Save As can produce an image that has a corner of a window showing; don't know how to reproduce; 
+	- found 5-10-17 (I thought images were taken care of by now; guess not)
 
 Fixed Issues:
 - Incorrect angles, especially around 180 degrees
 - Clicking "Make Foldable" with a blank canvas crashes; need to fix method with array to account for this case
 - Clicking "Fold It!" with a blank canvas crashes; see above
+- Undo does not perform correctly chronologically all the time, especially with several folds present
+- Undo messes up future 'fold it' calls so that some things are negative and not displayed correctly
+	- maybe Undo should be avoided for now altogether :(
 
 Other Notes:
 - The .classpath file for the project for eclipse is modified if the reference libraries have a different path
