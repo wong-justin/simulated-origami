@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class PaintPanel extends Canvas{
 						
-	private Color white, black;	//, cyan;
+	private Color white, black, red;	//, cyan;
 	private ArrayList<Point> points = new ArrayList<Point>();
 	private ArrayList<Double> anglesOfPoints = new ArrayList<Double>();
 	private final int RADIUS = 200;
@@ -48,6 +48,7 @@ public class PaintPanel extends Canvas{
 		
 		white = getDisplay().getSystemColor(SWT.COLOR_WHITE);
 		black = getDisplay().getSystemColor(SWT.COLOR_BLACK);
+		red = getDisplay().getSystemColor(SWT.COLOR_RED);
 		//cyan = getDisplay().getSystemColor(SWT.COLOR_CYAN);
 				
 //		p.setBackground(cyan);	// only changes panel2 and panel3 to be cyan...

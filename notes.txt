@@ -88,3 +88,11 @@ new -> composite (like a part of the window)
 
 5-10-17	presentation tmrw; if you click "Fold It!" enough, eventually it will work for an even number of creases
 
+	My algorithm to check foldability sees if the halfanglesum ~ 180, but according to wikipedia,
+	"An equivalent way of stating the same condition is that, if the angles are partitioned into two alternating subsets, 
+	then the sum of the angles in either of the two subsets is exactly 180 degrees.[2] However, this equivalent form 
+	applies only to a crease pattern on a flat piece of paper, whereas the alternating sum form of the condition 
+	remains valid for crease patterns on conical sheets of paper with nonzero defect at the vertex.[3]"
+
+	so i should probably change to the consecutive alternating sum of all = 0, just for better possible applications in the future.
+

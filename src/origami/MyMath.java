@@ -1,6 +1,6 @@
 package origami;
 
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
 import java.util.ArrayList;
 import org.eclipse.swt.graphics.Point;
 
