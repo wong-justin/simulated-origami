@@ -1,10 +1,6 @@
-README
-
 Created by Justin Wong
-jkwongfl@yahoo.com
 
-First started ~ Jan 2017
-Last updated - July 17, 2019 - added PDF summary after two years
+Jan 2017
 
 For project summary with pictures and conclusions, see origami_sim_summary.PDF
 
@@ -13,7 +9,7 @@ Intended for educational use. It is made as an SWT Project in Eclipse.
 
 Inspired by Erik Demaine's video lectures.
 
-Known Issues:
+#### Known Issues:
 - Saving more than once crashes
 - Clicking "Cancel" in the save dialog crashes
 - Clicking the top-right red [X] on the save dialog crashes
@@ -28,7 +24,7 @@ Known Issues:
 - Save As can produce an image that has a corner of a window showing; don't know how to reproduce; 
 	- found 5-10-17 (I thought images were taken care of by now; guess not)
 
-Fixed Issues:
+#### Fixed Issues:
 - Incorrect angles, especially around 180 degrees
 - Clicking "Make Foldable" with a blank canvas crashes; need to fix method with array to account for this case
 - Clicking "Fold It!" with a blank canvas crashes; see above
@@ -36,20 +32,20 @@ Fixed Issues:
 - Undo messes up future 'fold it' calls so that some things are negative and not displayed correctly
 	- maybe Undo should be avoided for now altogether :(
 
-Other Notes:
+#### Other Notes:
 - The .classpath file for the project for eclipse is modified if the reference libraries have a different path
 	(i.e. different computer)
 	- Should I try to have 2 copies of the .classpath file to toggle between home/school?
 - There may be non-disposed resources because of some unfamiliarity with SWT
 - minor - Should the program icon be a different file type (gif or ico or other)?
 
-Existing Features:
+#### Existing Features:
 - Given creases, tell if foldable
 - Adjust given creases to be foldable
 - Save as jpg
 - Undo
 
-Features to add:
+#### Features to add:
 - Other demo types (eg. 1D flat folding, fold and one cut)
 - Save as other file (eg. vector image, custom file type that saves points/angles)
 	- Open file
@@ -65,7 +61,7 @@ Features to add:
 - Maybe use linked list instead of array lists, where each node represents a crease (that has an angle and a point)
 	- This would probably help reduce confusion among all the array lists and make more readable
 
-Shoutouts to:
+#### Shoutouts to:
 - Lindsey Spalding, mentor
 - Cheerleaders and testers: Stefan I, Michael C, Tess M, Tori G, Madison D, Jacob E, Nick H, 
 - Robert Lang, Jun Mitani for inspiring program
