@@ -9,6 +9,28 @@ Intended for educational use. It is made as an SWT Project in Eclipse.
 
 Inspired by Erik Demaine's video lectures.
 
+#### Existing Features:
+- Given creases, tell if foldable
+- Adjust given creases to be foldable
+- Save as jpg
+- Undo
+
+#### Features to add:
+- Other demo types (eg. 1D flat folding, fold and one cut)
+- Save as other file (eg. vector image, custom file type that saves points/angles)
+	- Open file
+- Type in angle to create a line (another option besides just clicking)
+	- This wouldn't be that bad since I already have an angleToPoint method
+- M/V assignment algorithm 
+	- users M/V assignment (an edit mode of sorts)
+- Toggle mode to hover over a sector and show its angle, rather than just automatically creating temp line on cursor
+- Instead of unrestricted cursor clicks that produce decimal angles, use a snap-to-integer angle system where everything will be integers
+	- This would not only help be more exact (combating the imprecise use of integer pixel coords of SWT Point), 
+	  but also would contribute to a better user/learning experience; user would have more control and it would be easier to 
+	  experiment and produce desired results (e.g. make two sectors of equal size)
+- Maybe use linked list instead of array lists, where each node represents a crease (that has an angle and a point)
+	- This would probably help reduce confusion among all the array lists and make more readable
+
 #### Known Issues:
 - Saving more than once crashes
 - Clicking "Cancel" in the save dialog crashes
@@ -38,28 +60,6 @@ Inspired by Erik Demaine's video lectures.
 	- Should I try to have 2 copies of the .classpath file to toggle between home/school?
 - There may be non-disposed resources because of some unfamiliarity with SWT
 - minor - Should the program icon be a different file type (gif or ico or other)?
-
-#### Existing Features:
-- Given creases, tell if foldable
-- Adjust given creases to be foldable
-- Save as jpg
-- Undo
-
-#### Features to add:
-- Other demo types (eg. 1D flat folding, fold and one cut)
-- Save as other file (eg. vector image, custom file type that saves points/angles)
-	- Open file
-- Type in angle to create a line (another option besides just clicking)
-	- This wouldn't be that bad since I already have an angleToPoint method
-- M/V assignment algorithm 
-	- users M/V assignment (an edit mode of sorts)
-- Toggle mode to hover over a sector and show its angle, rather than just automatically creating temp line on cursor
-- Instead of unrestricted cursor clicks that produce decimal angles, use a snap-to-integer angle system where everything will be integers
-	- This would not only help be more exact (combating the imprecise use of integer pixel coords of SWT Point), 
-	  but also would contribute to a better user/learning experience; user would have more control and it would be easier to 
-	  experiment and produce desired results (e.g. make two sectors of equal size)
-- Maybe use linked list instead of array lists, where each node represents a crease (that has an angle and a point)
-	- This would probably help reduce confusion among all the array lists and make more readable
 
 #### Shoutouts to:
 - Lindsey Spalding, mentor
